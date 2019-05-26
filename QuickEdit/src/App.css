@@ -1,0 +1,26 @@
+.App {
+  margin:20px
+}
+
+.root {
+  flex-grow:1
+}
+
+.paper {
+  padding: 2px;
+  text-align: center;
+}
+
+.table {
+  width: 100%
+}
+
+.table td {
+  border-bottom: 1px solid #f1f1f1;
+  text-align: left;
+}
+
+.foodTable {
+  padding:10px;
+  margin-top:20px;
+}

@@ -1,0 +1,86 @@
+// class TextControl {
+//   constructor(public name: string) {}
+
+//   public getControl(form: any) {
+//     const model = form.getModel();
+//     const value = model[this.name];
+
+//     const onChange = (e) => {
+//       model.setProperty(this.name, e.target.value)
+//     }
+
+//     return (
+//       <div>
+//         <TextField label={this.name} value={value} onChange={(e) => onChange(e)} />
+//       </div>
+//     )
+//   }
+// }
+
+// class Customer extends Model {
+//   public Id: number = 0;
+//   public FirstName: string = "";
+//   public LastName: string = "";
+//   public Email: string = "";
+
+//   public get FullName() {
+//     return this.FirstName + " " + this.LastName;
+//   }
+
+//   public getFormFields() {
+//     return [
+//       new TextControl("FirstName"),
+//       new TextControl("LastName"),
+//       new TextControl("Email"),
+//     ]
+//   }
+
+//   public getTableFields() {
+//     return [
+//       "FirstName",
+//       "LastName",
+//       "Email"
+//     ]
+//   }
+// }
+
+// class Form extends React.Component<any> implements IModelObserver
+// {
+//   constructor(props: any) {
+//     super(props);
+//     const model = this.props.model;
+//     this.state = {
+//       changed: false
+//     }
+//     this.props.model.subscribe(this);
+//     this.onSave = this.onSave.bind(this);
+//   }
+
+//   onNotifyChange(event: any) {
+//     this.forceUpdate();
+//     this.setState({
+//       changed: true
+//     })
+//   }
+
+//   onSave() {
+//     this.props.model.save(this.props.model.selected);
+//   }
+
+//   getModel() {
+//     return this.props.model.selected || null;
+//   }
+
+//   render() {
+//     const model  = this.props.model.selected;
+//     const fields = model.getFormFields();
+//     return (
+//       <div>
+//           {fields.map(c => c.getControl(this))}
+//           <div style={{padding:"5px"}} >
+//             <Button variant="contained" color="primary" onClick={(e) => this.onSave()} >Save</Button>
+//           </div>
+//       </div>
+//     );
+//   }
+// }
