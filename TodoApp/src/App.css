@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  margin:20px
 }
 
 .App-logo {
@@ -30,4 +30,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.root {
+  flex-grow:1
+}
+
+.paper {
+  padding: 2px;
+  text-align: center;
 }

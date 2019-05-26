@@ -8,11 +8,18 @@ import {TodoCollection, TodoItem} from '../Models/Todos'
 
 export class TodoView extends CollectionMediator
 {
+    constructor(props) {
+        super(props);
+    }
+
     getModel() {
         return new TodoItem();
     }
 
     getCollection() {
+        if (this.props.collection) {
+            return this.props.collection;
+        }
         return new TodoCollection();
     }
 

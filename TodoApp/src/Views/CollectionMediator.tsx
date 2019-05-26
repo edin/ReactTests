@@ -3,6 +3,8 @@ import React from 'react';
 export abstract class CollectionMediator extends React.Component<any, any> {
     protected collection: any = null;
 
+    private changeHandler: any;
+
     constructor(props: any) {
         super(props);
 
@@ -14,12 +16,18 @@ export abstract class CollectionMediator extends React.Component<any, any> {
             items: this.collection.getItems()
         }
 
-        this.collection.subscribe(event => {
+        this.changeHandler = (event) => {
             this.setState({
                 ... this.state,
                 items : this.collection.getItems()
             })
-        })
+        }
+
+        this.collection.subscribe(this.changeHandler);
+    }
+
+    componentWillUnmount() {
+        this.collection.unsubscribe(this.changeHandler);
     }
 
     abstract getCollection(): any;
