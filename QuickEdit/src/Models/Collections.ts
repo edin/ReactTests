@@ -6,7 +6,7 @@ export class Food {
     public calories: number = 0;
     public fat: number = 0;
     public carbs: number = 0;
-    public protein: number = 0;
+    public protein: number = 2;
 
     static create(data: any): Food {
         const food = new Food();
@@ -35,5 +35,9 @@ export class FoodCollection extends Collection<Food>
 
     createNewItem(): Food {
         return new Food();
+    }
+
+    createFromData(data: any): Food {
+        return Food.create(data);
     }
 }

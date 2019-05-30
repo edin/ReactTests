@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 export abstract class CollectionMediator extends React.Component<any, any> {
     protected collection: any = null;
 
@@ -13,6 +14,7 @@ export abstract class CollectionMediator extends React.Component<any, any> {
 
         this.state = {
             model: model,
+            search: "",
             items: this.collection.getItems()
         }
 
@@ -34,24 +36,50 @@ export abstract class CollectionMediator extends React.Component<any, any> {
         return this.props.collection || null;
     }
 
-    onModelChange(name) {
-        return (e) => {
-            this.setState({
-                ...this.state,
-                model: {
-                    ...this.state.model,
-                    [name] : e.target.value
+    getValueByPath(model: any, path: string): any {
+        const parts = path.split(".")
+        let value = model;
+
+        for (const prop of parts) {
+            value = value[prop];
+        }
+        return value;
+    }
+
+    bindTo(path: string) {
+
+        const modelValue = this.getValueByPath(this.state, path);
+
+        return {
+            value: modelValue,
+            onChange: (e: any) => {
+
+                const parts = path.split(".")
+                let model = this.state;
+                let propertyName = parts[parts.length-1]
+
+                for (let i = 0; i < parts.length-1; i++){
+                    model = model[parts[i]];
                 }
-            })
+
+                (model as any)[propertyName as any] = e.target.value;
+                this.forceUpdate();
+            }
         }
     }
 
+    clearSearch() {
+        return () => { this.setState({search: ""}) };
+    }
+
     saveItem() {
-        this.collection.save(this.state.model)
-        this.setState({
-            ...this.state,
-            model: this.collection.createNewItem()
-        })
+        const model = this.collection.createFromData(this.state.model)
+        this.collection.save(model);
+        this.setState({model: this.collection.createNewItem()});
+    }
+
+    editItem(item) {
+        this.setState({model: item});
     }
 
     removeItem(item) {
