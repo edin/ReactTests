@@ -46,6 +46,10 @@ export abstract class CollectionMediator extends React.Component<any, any> {
         return value;
     }
 
+    setMode(name) {
+        this.setState({mode: name})
+    }
+
     bindTo(path: string) {
 
         const modelValue = this.getValueByPath(this.state, path);
@@ -75,11 +79,12 @@ export abstract class CollectionMediator extends React.Component<any, any> {
     saveItem() {
         const model = this.collection.createFromData(this.state.model)
         this.collection.save(model);
-        this.setState({model: this.collection.createNewItem()});
+        this.setState({model: this.collection.createNewItem(), mode: "list"});
     }
 
     editItem(item) {
-        this.setState({model: item});
+        this.setState({model: item, mode: "edit"});
+
     }
 
     removeItem(item) {
