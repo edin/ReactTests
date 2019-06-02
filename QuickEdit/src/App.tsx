@@ -1,31 +1,60 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List';
+import ListItem, { ListItemProps } from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
+import './App.css';
 
 import {FoodList} from './Views/FoodList'
-import {FoodCollection} from './Models/Collections'
+import {CollectionEditor} from './Foundation/CollectionEditor'
+import {State} from './Models/DataContext'
 
-const State = {
-  Foods : new FoodCollection()
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper,
+    },
+  }),
+);
+
+function MenuList(props) {
+  return (<List style={props.style} component="nav">{props.children}</List>)
 }
 
-function App() {
+function MenuItem(props) {
   return (
-    <div className="App">
-      <h2>Quick Edit</h2>
-      <Grid container spacing={3} className="root">
-        <Grid xs={12}>
-            <FoodList collection={State.Foods} />
+  <Link to={props.to}>
+    <ListItem button>
+      <ListItemText primary={props.children} />
+    </ListItem>
+  </Link>)
+}
+
+function AppRouter() {
+  return (
+    <Router>
+      <Grid container>
+        <Grid xs={2} className="menu">
+          <h2 className="title">Menu</h2>
+          <MenuList>
+            {State.getCollections().map(e => {
+              return <MenuItem to={e.path}>{e.title}</MenuItem>
+            })}
+          </MenuList>
+        </Grid>
+        <Grid xs={10} className="content">
+          {State.getCollections().map(e => {
+            return <Route path={e.path} component={() => (<CollectionEditor collection={e.collection} />)} />
+          })}
         </Grid>
       </Grid>
-    </div>
+    </Router>
   );
 }
 
-export default App;
+export default AppRouter;

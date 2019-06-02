@@ -1,4 +1,4 @@
-import {Collection} from './Models'
+import { Collection } from "../Foundation/Models";
 
 export class Food {
     public id: number = 0;
@@ -9,14 +9,28 @@ export class Food {
     public protein: number = 2;
 
     static create(data: any): Food {
-        const food = new Food();
-        food.id = data.id || 0;
-        food.name = data.name;
-        food.calories = data.calories;
-        food.fat = data.fat;
-        food.carbs = data.carbs;
-        food.protein = data.protein;
-        return food;
+        const model = new Food();
+        model.id = data.id || 0;
+        model.name = data.name;
+        model.calories = data.calories;
+        model.fat = data.fat;
+        model.carbs = data.carbs;
+        model.protein = data.protein;
+        return model;
+    }
+
+    getToolbarTitle() {
+        return "Food";
+    }
+
+    getMetaData() {
+        return [
+            {name: "name"},
+            {name: "calories"},
+            {name: "fat"},
+            {name: "carbs"},
+            {name: "protein"},
+        ]
     }
 }
 
@@ -35,9 +49,5 @@ export class FoodCollection extends Collection<Food>
 
     createNewItem(): Food {
         return new Food();
-    }
-
-    createFromData(data: any): Food {
-        return Food.create(data);
     }
 }

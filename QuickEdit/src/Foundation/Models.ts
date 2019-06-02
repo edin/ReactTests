@@ -28,6 +28,20 @@ export abstract class Collection<T> extends Observable {
         return this.items;
     }
 
+    public findBySearchText(searchText: string): T[] {
+
+        if (searchText === "") {
+            return this.getItems();
+        }
+
+        const text = (searchText || "").toLowerCase();
+        const result = this.items.filter(item => {
+            return Object.keys(item).map(key => String(item[key] || "")).some(value => value.toLowerCase().indexOf(text) != -1)
+        });
+
+        return result;
+    }
+
     abstract createNewItem(): T;
 
     public save(item: T) {

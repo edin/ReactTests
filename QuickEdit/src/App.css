@@ -1,26 +1,16 @@
-.App {
-  margin:20px
+.menu a {
+  text-decoration: none;
+  color: navy;
 }
 
-.root {
-  flex-grow:1
-}
-
-.paper {
-  padding: 2px;
+.menu .title {
   text-align: center;
+  background: #f1f1f1;
+  display: block;
+  line-height: 64px;
+  height: 64px;
+  margin: 0px;
 }
 
-.table {
-  width: 100%
-}
+/* .content { } */
 
-.table td {
-  border-bottom: 1px solid #f1f1f1;
-  text-align: left;
-}
-
-.foodTable {
-  padding:10px;
-  margin-top:20px;
-}
